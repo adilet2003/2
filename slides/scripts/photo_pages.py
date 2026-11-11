@@ -1,11 +1,10 @@
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 W,H=2048,1152
 F=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf',64)
-def page(photos, out):
+def page(photos, out, t="Иш-чаралардан сүрөттөр"):
     bg=Image.open('slide_2.png').convert('RGB').resize((W,H)).filter(ImageFilter.GaussianBlur(28))
     bg=Image.blend(bg,Image.new('RGB',(W,H),(235,242,252)),0.55)
     d=ImageDraw.Draw(bg)
-    t="Иш-чаралардан сүрөттөр"
     tw=d.textlength(t,font=F); bw=tw+160
     d.rounded_rectangle(((W-bw)/2,50,(W+bw)/2,170),60,fill=(16,38,104),outline=(214,175,80),width=5)
     d.text((W/2,110),t,font=F,fill='white',anchor='mm')
@@ -24,3 +23,7 @@ def page(photos, out):
     bg.save(out)
 page(['../photos/photo_1_HD.jpg','../photos/photo_4_HD.jpg'],'photos_page_1.png')
 page(['../photos/photo_2_HD.jpg','../photos/photo_3_HD.jpg'],'photos_page_2.png')
+L='../photos/lineika/lineika_'
+T="1-сентябрь – Билим күнү: салтанаттуу линейка"
+page([L+'3.jpg',L+'1.jpg',L+'5.jpg'],'lineika_page_1.png',T)
+page([L+'2.jpg',L+'4.jpg'],'lineika_page_2.png',T)
